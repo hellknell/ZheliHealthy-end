@@ -1,4 +1,9 @@
 spring:
+  cache:
+    type: redis
+    redis:
+#    缓存时间
+      time-to-live: 2592000000
   redis:
     database: 5
     host: localhost

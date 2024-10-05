@@ -11,13 +11,13 @@ server:
 
 spring:
   data:
-    mongodb:
-      host: localhost
-      port: 27017
-      username: mongo
-      password: abc123456
-      authentication-database: admin
-      database: his
+#    mongodb:
+#      host: localhost
+#      port: 27017
+#      username: mongo
+#      password: abc123456
+#      authentication-database: admin
+#      database: his
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
