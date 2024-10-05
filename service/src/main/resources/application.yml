@@ -1,0 +1,84 @@
+server:
+  jetty:
+    threads:
+      selectors: 4
+      acceptors: 8
+      min: 8
+      max: 200
+  port: 7900
+  servlet:
+    context-path: /api
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: mongo
+      password: abc123456
+      authentication-database: admin
+      database: his
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:7001/his?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+      username: root
+      password: abc123456
+      initial-size: 8
+      max-active: 16
+      max-wait: 60000
+      #    driver-class-name: com.mysql.cj.jdbc.Driver
+      test-on-borrow: true
+      test-while-idle: true
+      test-on-return: false
+      validation-query: SELECT 1
+  #    hikari:
+  #      minimum-idle: 5   # 最小空闲连接数量
+  #      idle-timeout: 180000   #  空闲连接存活最大时间，默认600000（10分钟）
+  #      maximum-pool-size: 20 # 连接池最大连接数，默认是10
+  #      auto-commit: true # 控制从池返回的链接的默认自动提交行为，默认值：true
+  #      pool-name: Hikari # 连接池名称
+  #      max-lifetime: 1800000 # 控制池中链接的最长生命周期，值0表示无限生命周期，默认1800000，即30分钟
+  #      connection-timeout: 30000 # 数据库链接超时时间，默认30秒，即30000
+  #      connection-test-query: SELECT 1
+  servlet:
+    multipart:
+      max-request-size: 20MB
+      max-file-size: 20MB
+      enabled: true
+
+  sa-token:
+
+    #   过期时间(秒),30天
+    timeout: 2592000
+    #    临时有效期
+    activity-timeout: 259200
+    #    HTTP请求头中哪个属性哪个是属性用来上传令牌
+    token-name: token
+    #不允许多点登录
+    allow-concurrent-login: false
+    #    在多人登录相同账号时,是否使用相同的token
+    is-share: false
+    token-style: uuid
+    is-read-cookie: false
+#    #    同端互斥
+#    isConcurrent: false
+
+
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.Yu.his.service.domain
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    root: info
+    com.Yu.his.service.mapper: info
+knife4j:
+  basic:
+    enable: true
+
+
