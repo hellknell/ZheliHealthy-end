@@ -1,4 +1,9 @@
 server:
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.p12
+    key-store-type: PKCS12
+    key-store-password: abc123456
   jetty:
     threads:
       selectors: 4
@@ -8,16 +13,20 @@ server:
   port: 7900
   servlet:
     context-path: /api
-
 spring:
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+  #      exclude: WEB-INF/**
   data:
-#    mongodb:
-#      host: localhost
-#      port: 27017
-#      username: mongo
-#      password: abc123456
-#      authentication-database: admin
-#      database: his
+  #    mongodb:
+  #      host: localhost
+  #      port: 27017
+  #      username: mongo
+  #      password: abc123456
+  #      authentication-database: admin
+  #      database: his
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -48,23 +57,6 @@ spring:
       max-file-size: 20MB
       enabled: true
 
-  sa-token:
-
-    #   过期时间(秒),30天
-    timeout: 2592000
-    #    临时有效期
-    activity-timeout: 259200
-    #    HTTP请求头中哪个属性哪个是属性用来上传令牌
-    token-name: token
-    #不允许多点登录
-    allow-concurrent-login: false
-    #    在多人登录相同账号时,是否使用相同的token
-    is-share: false
-    token-style: uuid
-    is-read-cookie: false
-#    #    同端互斥
-#    isConcurrent: false
-
 
 
 mybatis:
@@ -80,5 +72,19 @@ logging:
 knife4j:
   basic:
     enable: true
+sa-token:
+    #   过期时间(秒),30天
+    timeout: 2592000
+    #    临时有效期
+    activity-timeout: 259200
+    #    HTTP请求头中哪个属性哪个是属性用来上传令牌
+    token-name: token
+    #不允许多点登录
+    #    在多人登录相同账号时,是否使用相同的token
+    is-share: false
+    token-style: uuid
+    is-read-cookie: false
+    #    同端互斥
+    isConcurrent: false
 
 

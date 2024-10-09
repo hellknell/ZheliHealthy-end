@@ -19,7 +19,6 @@ public class ExceptionAdvice {
     /*
      * 捕获异常，并且返回500状态码
      */
-    @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public String exceptionHandler(Exception e) {
