@@ -33,11 +33,11 @@ import java.util.List;
 public class Swagger2Config {
 
     private ApiInfo adminApiInfo() {
-        return new ApiInfoBuilder().title("Eric-SpringBoot整合Knife4j-API文档").description("本文档描述了SpringBoot如何整合Knife4j").version("1.0").contact(new Contact("Eric", "https://blog.csdn.net/weixin_47316183?type=blog", "ericsyn@foxmail.com")).build();
+        return new ApiInfoBuilder().title("浙里健康项目整合Knife4j-API文档").description("本文档描述了SpringBoot如何整合Knife4j").version("1.0").contact(new Contact("Eric", "https://blog.csdn.net/weixin_47316183?type=blog", "ericsyn@foxmail.com")).build();
     }
 
     private ApiInfo webApiInfo() {
-        return new ApiInfoBuilder().title("Eric-SpringBoot整合Knife4j-API文档").description("本文档描述了SpringBoot如何整合Knife4j").version("1.0").contact(new Contact("Eric", "https://blog.csdn.net/weixin_47316183?type=blog", "ericsyn@foxmail.com")).build();
+        return new ApiInfoBuilder().title("浙里健康项目整合Knife4j-API文档").description("本文档描述了SpringBoot如何整合Knife4j").version("1.0").contact(new Contact("Eric", "https://blog.csdn.net/weixin_47316183?type=blog", "ericsyn@foxmail.com")).build();
     }
 
     /**

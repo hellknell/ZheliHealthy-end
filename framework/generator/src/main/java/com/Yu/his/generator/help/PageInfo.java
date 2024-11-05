@@ -27,7 +27,7 @@ public class PageInfo<T> implements Serializable {
     /**
      * 总记录条数
      */
-    private Integer total;
+    private Integer total = 0;
     /**
      * 总页数
      */

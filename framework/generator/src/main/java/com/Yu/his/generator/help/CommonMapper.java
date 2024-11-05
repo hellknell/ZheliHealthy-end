@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface CommonMapper<T> {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(T row);
 
@@ -27,9 +27,14 @@ public interface CommonMapper<T> {
     int updateField(@Param("example") MyBatisWrapper example);
 
     int updateFieldBatch(List<MyBatisWrapper> list);
+
     int insertBatch(@Param("list") List<T> list);
+
     T get(MyBatisWrapper example);
+
     int updateBatchSelective(@Param("list") List<T> list);
+
     int deleteByExample(@Param("example") MyBatisWrapper example);
+
     int deleteField(@Param("example") MyBatisWrapper example);
 }

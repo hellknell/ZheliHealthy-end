@@ -1,6 +1,7 @@
 package com.Yu.his.service.exception;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 /**
  * 功能:
@@ -8,6 +9,7 @@ import lombok.Data;
  * 日期：2024/10/5 17:17
  */
 @Data
+@Component
 public class HisException extends RuntimeException {
 
     String msg;

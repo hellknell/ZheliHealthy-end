@@ -16,6 +16,7 @@
         <module>generator</module>
         <module>cache</module>
         <module>mq</module>
+        <module>minio</module>
     </modules>
 
     <properties>

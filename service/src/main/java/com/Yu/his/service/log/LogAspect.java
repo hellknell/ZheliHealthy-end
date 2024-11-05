@@ -36,6 +36,7 @@ public class LogAspect {
     @Pointcut("execution(public * com.Yu..*Controller.*(..))")
     public void controllerPointcut() {
     }
+
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint jointPoint) {
 //        MDC.put("LOG_ID", System.currentTimeMillis() + RandomUtil.randomString(3));

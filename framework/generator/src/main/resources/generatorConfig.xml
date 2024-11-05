@@ -72,9 +72,10 @@
         <!--               enableUpdateByExample="false" enableDeleteByExample="false"-->
         <!--               enableSelectByExample="false" selectByExampleQueryId="false">-->
         <!--        </table>-->
-        <table tableName="tb_user" domainObjectName="User" enableCountByExample="false"
+        <table tableName="tb_order" domainObjectName="Order" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MYSQL"/>
         </table>
     </context>
 </generatorConfiguration>

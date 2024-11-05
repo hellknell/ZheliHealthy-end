@@ -4,15 +4,22 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.Yu.his.generator.help.MyBatisWrapper;
+import com.Yu.his.generator.help.PageInfo;
 import com.Yu.his.service.domain.User;
 import com.Yu.his.service.domain.UserField;
 import com.Yu.his.service.exception.HisException;
 import com.Yu.his.service.mapper.UserMapper;
 import com.Yu.his.service.po.UpdatePassPo;
 import com.Yu.his.service.po.UserLoginPo;
+import com.Yu.his.service.po.UserQueryPo;
+import com.Yu.his.service.vo.UserListVO;
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 功能:
@@ -47,7 +54,6 @@ public class UserService {
         String password = po.getPassword();
         String newPassword = po.getNewPassword();
         int userId = po.getUserId();
-
         MyBatisWrapper<User> wrapper = new MyBatisWrapper<>();
         wrapper.select(UserField.Username).whereBuilder().andEq(UserField.setId(userId));
         User user = userMapper.topOne(wrapper);
@@ -57,14 +63,23 @@ public class UserService {
         String tempBefore = StrUtil.subWithLength(temp, 0, 6);
         String tempEnd = StrUtil.subSuf(temp, temp.length() - 3);
         String newPass = md5.digestHex(tempBefore + password + tempEnd).toUpperCase();
-
         newPassword = md5.digestHex(tempBefore + newPassword + tempEnd).toUpperCase();
         MyBatisWrapper<User> wrapper1 = new MyBatisWrapper<>();
         wrapper1.update(UserField.setPassword(newPassword)).whereBuilder().andEq(UserField.setId(userId)).andEq(UserField.setPassword(newPass));
         int i = userMapper.updateField(wrapper1);
-        if(i==0){
-         throw new HisException("原密码错误") ;
+        if (i == 0) {
+            throw new HisException("原密码错误");
         }
         return i;
+    }
+
+
+    public PageInfo queryUserList(UserQueryPo po) {
+        List<UserListVO> list = new ArrayList<>();
+        long count = userMapper.Count(po);
+        if (count > 0L) {
+            list = userMapper.selectUserList(po);
+        }
+        return new PageInfo<>(po.getPageIndex(), po.getPageSize(), list.size(), list);
     }
 }
