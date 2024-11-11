@@ -16,7 +16,6 @@ public class AlipayBean implements Serializable {
      * 订单名称
      */
     private String subject;
-
     /**
      * 付款金额
      */
@@ -26,6 +25,13 @@ public class AlipayBean implements Serializable {
      * 商品描述
      */
     private String body;
+
+    public AlipayBean(String out_trade_no, String subject, String total_amount, String body) {
+        this.out_trade_no = out_trade_no;
+        this.subject = subject;
+        this.total_amount = total_amount;
+        this.body = body;
+    }
 
     /**
      * 产品编号，支付方式不同，传的数据不同

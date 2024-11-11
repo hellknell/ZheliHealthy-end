@@ -1,5 +1,6 @@
 package com.Yu.his.service.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
@@ -12,9 +13,11 @@ import com.Yu.his.generator.help.PageInfo;
 import com.Yu.his.minio.util.MinioUtil;
 import com.Yu.his.service.domain.Goods;
 import com.Yu.his.service.domain.GoodsField;
+import com.Yu.his.service.domain.GoodsSnapshotEntity;
 import com.Yu.his.service.domain.GoodsWithBLOBs;
 import com.Yu.his.service.exception.HisException;
 import com.Yu.his.service.mapper.GoodsMapper;
+import com.Yu.his.service.mapper.GoodsSnapshotDao;
 import com.Yu.his.service.po.GoodsQueryPo;
 import com.Yu.his.service.po.SearchGoodByIdPo;
 import com.Yu.his.service.vo.GoodInfoVo;
@@ -36,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +54,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GoodsService {
     final TransactionTemplate template;
+    final GoodsSnapshotDao goodsSnapshotDao;
     final GoodsMapper goodsMapper;
     @Resource
     private MinioUtil minioUtil;
@@ -127,7 +132,6 @@ public class GoodsService {
     }
 
 
-
     @CacheEvict(cacheNames = "goods", key = "#id")
     public void updateCheckupExcel(int id, MultipartFile file) {
         ArrayList list = new ArrayList<>();
@@ -203,6 +207,17 @@ public class GoodsService {
         }
         return rows;
 
+    }
+
+    public HashMap searchBySnapshotId(String snapshotId) {
+
+        //TODO (何宇,2024/11/11,18:49) 如果customer不为空,检查该用户是否拥有该商品快照
+
+
+        GoodsSnapshotEntity goodsSnapshotEntity = goodsSnapshotDao.searchBySnapshotId(snapshotId);
+
+        HashMap stringObjectMap = BeanUtil.toBean(goodsSnapshotEntity, HashMap.class);
+        return stringObjectMap;
     }
 
 }

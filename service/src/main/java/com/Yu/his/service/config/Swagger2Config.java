@@ -49,9 +49,7 @@ public class Swagger2Config {
     public Docket webApiConfig() {
         List<Parameter> pars = new ArrayList<>();
         ParameterBuilder tokenPar = new ParameterBuilder();
-        tokenPar.name("token").description("用户token")
-                //.defaultValue(JwtHelper.createToken(1L, "admin"))
-                .defaultValue("1").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name("token").description("用户token").defaultValue("1").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
 
         Docket webApi = new Docket(DocumentationType.SWAGGER_2).groupName("用户端接口").apiInfo(webApiInfo()).select()

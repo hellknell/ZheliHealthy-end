@@ -31,6 +31,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 功能:
@@ -177,5 +178,13 @@ public class GoodsController {
         } catch (IOException e) {
             throw new HisException("文件下载失败");
         }
+    }
+
+    @GetMapping("searchSnapshotForMis")
+    @ApiOperation(value = "查询商品快照")
+    public R searchBySnapshotId(@Valid SearchSnapshotPo po) {
+        String snapshotId = po.getSnapshotId();
+        HashMap hashMap = goodsService.searchBySnapshotId(snapshotId);
+        return R.ok().put("result", hashMap);
     }
 }

@@ -16,8 +16,6 @@ public class StpCustomerUtil {
 
     public final static String TYPE = "customer";
     public static StpLogic stpLogic = new StpLogic(TYPE);
-
-
     public String getLoginType() {
         return stpLogic.getLoginType();
     }

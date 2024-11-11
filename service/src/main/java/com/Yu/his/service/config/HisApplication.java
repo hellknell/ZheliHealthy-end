@@ -7,6 +7,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * 功能:
@@ -15,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 @SpringBootApplication
 @EnableAsync
-//@ConfigurationPropertiesScan("com.Yu.his.minio.util")
+@EnableScheduling
 @ServletComponentScan(basePackages = "com.Yu.his.service.config.xss")
 @ComponentScan("com.Yu.his")
 @EnableCaching

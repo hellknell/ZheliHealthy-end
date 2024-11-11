@@ -1,9 +1,9 @@
 server:
-  ssl:
-    enabled: true
-    key-store: classpath:keystore.p12
-    key-store-type: PKCS12
-    key-store-password: abc123456
+  #  ssl:
+  #    enabled: true
+  #    key-store: classpath:keystore.p12
+  #    key-store-type: PKCS12
+  #    key-store-password: abc123456
   jetty:
     threads:
       selectors: 4
@@ -13,6 +13,7 @@ server:
   port: 7900
   servlet:
     context-path: /api
+
 spring:
   redis:
     database: 0
@@ -31,13 +32,13 @@ spring:
       additional-paths: src/main/java #重启目录
   #      exclude: WEB-INF/**
   data:
-  #    mongodb:
-  #      host: localhost
-  #      port: 27017
-  #      username: mongo
-  #      password: abc123456
-  #      authentication-database: admin
-  #      database: his
+    mongodb:
+      host: localhost
+      port: 27017
+      username: mongo
+      password: abc123456
+      authentication-database: admin
+      database: his
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -104,7 +105,7 @@ alipay:
   alipay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjd/BMIzojT7yr7Y0bFIbXNM3T7DRQLOKvk/Z+pOh1KsEuoQyx1xGeHO/vRbIS/TfQvWJDa5q6jfkTwnyIykWy7q+yazbfJ9SSW+tgXR1S7cUw+rAVUQFNIrgem/nzsRQVSf4IGR/CsoC2yvIiQD0bJhAo9PIgwJd+WLE8GIzBdFeMeg2+OldKywEqhHo7Bws6MFMKyW5r9P+laSYANkEItcjSio37Snc2FePf+1ZsNM+X2XkCMjhI8807si9fBqNzXQrvX6RGIakFcfpv8vkp3ZAOZ/pClEeYj7zy5f613OmVruIw3As7N99YAUrcuPT8txMKPtcHr1yiPqnZ3Yi6wIDAQAB
   notify_url: http://e7jmck.natappfree.cc/api/alipay/notify
 
-
+#qlqmsy4235@sandbox.com:
 
 
 

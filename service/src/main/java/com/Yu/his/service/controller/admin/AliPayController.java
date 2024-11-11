@@ -1,57 +1,33 @@
 package com.Yu.his.service.controller.admin;
 
 import cn.hutool.json.JSONObject;
+import com.Yu.his.generator.help.MyBatisWrapper;
 import com.Yu.his.service.config.AliPayConfig;
-import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
+import com.Yu.his.service.domain.Order;
+import com.Yu.his.service.domain.OrderField;
+import com.Yu.his.service.mapper.OrderMapper;
+import com.Yu.his.service.service.user.OrderService;
+import com.Yu.his.service.websocket.WebsocketService;
 import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.api.request.AlipayTradePagePayRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/alipay")
+@RequiredArgsConstructor
 public class AliPayController {
-    private static final String CHARSET = "UTF-8";
 
     //签名方式
-    @GetMapping("/pay") // &subject=xxx&traceNo=xxx&totalAmount=xxx
-    public void pay(HttpServletResponse httpResponse) throws Exception {
-        log.info(AliPayConfig.appId);
-        log.info(AliPayConfig.notifyUrl);
-        // 1. 创建Client，通用SDK提供的Client，负责调用支付宝的API
-        AlipayClient alipayClient = new DefaultAlipayClient(AliPayConfig.gatewayUrl, AliPayConfig.appId, AliPayConfig.merchantPrivateKey, "json", AliPayConfig.charset, AliPayConfig.alipayPublicKey, AliPayConfig.signType);
-        // 2. 创建 Request并设置Request参数
-        AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();  // 发送请求的 Request类
-        request.setNotifyUrl(AliPayConfig.notifyUrl);
-        JSONObject bizContent = new JSONObject();
-        bizContent.set("out_trade_no", "P26161651342465");  // 我们自己生成的订单编号
-        bizContent.set("total_amount", "2999"); // 订单的总金额
-        bizContent.set("subject", "经济型体检套餐");   // 支付的名称
-        bizContent.set("product_code", "FAST_INSTANT_TRADE_PAY");  // 固定配置
-        request.setBizContent(bizContent.toString());
-        // 执行请求，拿到响应的结果，返回给浏览器
-        String form = "";
-        try {
-            form = alipayClient.pageExecute(request).getBody(); // 调用SDK生成表单
-        } catch (AlipayApiException e) {
-            e.printStackTrace();
-        }
-        httpResponse.setContentType("text/html;charset=" + CHARSET);
-        httpResponse.getWriter().write(form);// 直接将完整的表单html输出到页面
-        httpResponse.getWriter().flush();
-        httpResponse.getWriter().close();
-    }
+    final OrderService orderService;
+    final OrderMapper orderMapper;
 
     @PostMapping("/notify")  // 注意这里必须是POST接口
     public String payNotify(HttpServletRequest request) throws Exception {
@@ -70,8 +46,9 @@ public class AliPayController {
             String sign = params.get("sign");
             String content = AlipaySignature.getSignCheckContentV1(params);
             boolean checkSignature = AlipaySignature.rsa256CheckContent(content, sign, AliPayConfig.alipayPublicKey, "UTF-8"); // 验证签名
+            log.info(checkSignature + "");
             // 支付宝验签
-            if (checkSignature) {
+            if (!checkSignature) {
                 // 验签通过
                 System.out.println("交易名称: " + params.get("subject"));
                 System.out.println("交易状态: " + params.get("trade_status"));
@@ -81,13 +58,32 @@ public class AliPayController {
                 System.out.println("买家在支付宝唯一id: " + params.get("buyer_id"));
                 System.out.println("买家付款时间: " + params.get("gmt_payment"));
                 System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
-                // 更新订单未已支付
-//                ordersMapper.updateState(tradeNo, "已支付", gmtPayment, alipayTradeNo);
+                boolean b = orderService.updatePayment(new HashMap() {{
+                    put("transactionId", alipayTradeNo);
+                    put("outTradeNo", tradeNo);
+                }});
+                if (b) {
+                    log.info("订单付款成功,订单状态更新成功");
+                    MyBatisWrapper<Order> wrapper = new MyBatisWrapper<>();
+                    wrapper.select(OrderField.CustomerId).whereBuilder().andEq(OrderField.setOutTradeNo(tradeNo));
+                    Order order = orderMapper.topOne(wrapper);
+                    if (order == null) {
+                        log.error("没有查询到用户记录");
+                    } else {
+                        Integer customerId = order.getCustomerId();
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.set("result", true);
+                        log.info(order.getCustomerId() + "");
+                        WebsocketService.sendInfo(jsonObject.toString(), customerId.toString());
+                    }
+                } else {
+                    log.error("订单付款成功,但订单状态更新失败");
+                }
             }
+
         }
         return "success";
     }
-
 //    @GetMapping("/return")
 //    public String returnPay( AliPay aliPay) throws AlipayApiException {
 //
