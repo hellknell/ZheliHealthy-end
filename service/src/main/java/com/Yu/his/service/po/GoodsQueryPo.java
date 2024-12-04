@@ -32,7 +32,7 @@ public class GoodsQueryPo extends PagePo implements Serializable {
     private String type;
 
     @ApiModelProperty(value = "商品分区")
-    @Range(min = 1, max = 4, message = "分区id无效")
+    @Range(min = 1, max = 5, message = "分区id无效")
     private Integer partId;
     private Boolean status;
     private Integer start;

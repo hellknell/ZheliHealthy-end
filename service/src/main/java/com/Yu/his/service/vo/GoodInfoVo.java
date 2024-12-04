@@ -31,5 +31,4 @@ public class GoodInfoVo implements Serializable {
     private Integer count2;
     private Integer count3;
     private Integer count4;
-
 }

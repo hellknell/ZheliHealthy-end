@@ -17,8 +17,6 @@ import java.io.Serializable;
 @ApiModel(value = "分页参数")
 public class PagePo implements Serializable {
     private static final long serialVersionUID = -32154354545343L;
-
-
     @ApiModelProperty(value = "页码")
     @NotNull(message = "页码不能为空")
     private Integer pageIndex = 1;

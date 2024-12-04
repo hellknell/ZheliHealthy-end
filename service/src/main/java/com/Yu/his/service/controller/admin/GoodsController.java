@@ -14,11 +14,12 @@ import com.Yu.his.service.po.*;
 import com.Yu.his.service.service.GoodsService;
 import com.Yu.his.service.vo.GoodInfoVo;
 import com.Yu.his.service.vo.R;
-import io.lettuce.core.dynamic.annotation.Param;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

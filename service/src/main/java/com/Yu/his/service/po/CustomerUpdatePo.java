@@ -21,5 +21,6 @@ public class CustomerUpdatePo implements Serializable {
     private String sex;
     @Pattern(regexp = "^1[1-9]\\d{9}$", message = "tel格式有误")
     private String tel;
+    private String photo;
 
 }

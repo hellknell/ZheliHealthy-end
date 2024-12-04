@@ -39,7 +39,6 @@ public class GoodsSnapshotEntity implements Serializable {
     private List<String> tag;
     private String ruleName;
     private String rule;
-
     @Indexed
     private String md5;
 

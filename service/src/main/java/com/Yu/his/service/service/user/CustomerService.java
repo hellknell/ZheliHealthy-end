@@ -79,8 +79,7 @@ public class CustomerService {
 
     public OrderStatisticVo searchSummary(int id) {
         MyBatisWrapper<Customer> wrapper = new MyBatisWrapper<>();
-        wrapper.select(CustomerField.Name, CustomerField.Sex, CustomerField.Tel, CustomerField.Photo, CustomerField.CreateTime)
-                .whereBuilder().andEq(CustomerField.setId(id));
+        wrapper.select(CustomerField.Name, CustomerField.Sex, CustomerField.Tel, CustomerField.Photo, CustomerField.CreateTime).whereBuilder().andEq(CustomerField.setId(id));
         Customer customer = customerMapper.topOne(wrapper);
         OrderStatisticVo orderStatisticVo = orderMapper.searchOrderStatistic(id);
         orderStatisticVo.setName(customer.getName());
@@ -97,6 +96,7 @@ public class CustomerService {
         customer.setName(po.getName());
         customer.setTel(po.getTel());
         customer.setId(po.getId());
+        customer.setPhoto(po.getPhoto());
         int i = customerMapper.updateByPrimaryKeySelective(customer);
         return i;
     }

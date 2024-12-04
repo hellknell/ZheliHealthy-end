@@ -26,11 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     final OrderMapper orderMapper;
-
-
     public PageInfo searchByPage(MisOrderSearchPo po) {
         List<HashMap> objects = new ArrayList<>();
-
         long l = orderMapper.searchCount(po);
         if (l > 0L) {
             objects = orderMapper.searchByPage(po);
@@ -57,5 +54,14 @@ public class OrderService {
             throw new HisException("修改订单状态失败");
         }
         return i;
+    }
+
+
+    public boolean checkOrderIfValid(int customerId, Integer orderId) {
+        MyBatisWrapper<Order> wrapper = new MyBatisWrapper<>();
+        wrapper.select(OrderField.Id).whereBuilder().
+                andEq(OrderField.setId(orderId)).andEq(OrderField.setCustomerId(customerId));
+        Order order = orderMapper.topOne(wrapper);
+        return order != null;
     }
 }

@@ -26,6 +26,6 @@ public class RedisTemplateConfig {
         redisTemplate.setHashValueSerializer(objectJackson2JsonRedisSerializer);
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
-        }
-        }
+    }
+}
 

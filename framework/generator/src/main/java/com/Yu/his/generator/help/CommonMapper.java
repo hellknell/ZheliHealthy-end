@@ -25,7 +25,6 @@ public interface CommonMapper<T> {
     Integer count(MyBatisWrapper example);
 
     int updateField(@Param("example") MyBatisWrapper example);
-
     int updateFieldBatch(List<MyBatisWrapper> list);
 
     int insertBatch(@Param("list") List<T> list);

@@ -8,6 +8,7 @@ import com.Yu.his.service.config.AliPayConfig;
 import com.Yu.his.service.config.StpCustomerUtil;
 import com.Yu.his.service.po.CreatePaymentPo;
 import com.Yu.his.service.po.FrontOrderSearchPo;
+import com.Yu.his.service.po.OrderCancelPo;
 import com.Yu.his.service.po.OrderRefundPo;
 import com.Yu.his.service.service.user.OrderService;
 import com.Yu.his.service.vo.R;
@@ -43,13 +44,24 @@ public class OrderController {
     @GetMapping("/createPayment")
     @SaCheckLogin(type = StpCustomerUtil.TYPE)
     @ApiOperation("创建订单")
-    public void createPayment(@RequestParam("goodsId") @NotNull(message = "goodsId不能为空") @Min(value = 1, message = "goods不能小于1") Integer goodsId, @RequestParam("number") Integer number, HttpServletResponse httpResponse) throws Exception {
+    public void createPayment(@RequestParam("goodsId") @NotNull(message = "goodsId不能为空") @Min(value = 1, message = "goods不能小于1") Integer goodsId, @RequestParam("number") Integer number, @RequestParam(value = "amount", required = false) String amount, @RequestParam(value = "outTradeNo", required = false) String outTradeNo, @RequestParam(value = "goodsTitle", required = false) String goodsTitle, HttpServletResponse httpResponse) throws Exception {
         CreatePaymentPo po = new CreatePaymentPo();
         po.setNumber(number);
         po.setGoodsId(goodsId);
         int customerId = StpCustomerUtil.stpLogic.getLoginIdAsInt();
         po.setCustomerId(customerId);
-        HashMap payment = orderService.createPayment(po);
+        HashMap payment;
+        if (outTradeNo == null) {
+            payment = orderService.createPayment(po);
+        } else {
+            log.info("订单页面");
+            payment = new HashMap() {{
+                put("out_trade_no", outTradeNo);
+                put("total_amount", amount);
+                put("subject", goodsTitle);
+                put("body", goodsTitle);
+            }};
+        }
         // 1. 创建Client，通用SDK提供的Client，负责调用支付宝的API
         AlipayClient alipayClient = new DefaultAlipayClient(AliPayConfig.gatewayUrl, AliPayConfig.appId, AliPayConfig.merchantPrivateKey, "json", AliPayConfig.charset, AliPayConfig.alipayPublicKey, AliPayConfig.signType);
         // 2. 创建 Request并设置Request参数
@@ -98,5 +110,14 @@ public class OrderController {
         return R.ok().put("result", refund);
     }
 
+    @PostMapping("/cancel")
+    @ApiOperation("取消订单")
+    @SaCheckLogin(type = StpCustomerUtil.TYPE)
+    public R cancel(@RequestBody @Valid OrderCancelPo po) {
+        int loginIdAsInt = StpCustomerUtil.stpLogic.getLoginIdAsInt();
+        po.setCustomerId(loginIdAsInt);
+        int cancel = orderService.cancel(po);
+        return R.ok().put("rows", cancel);
+    }
 }
 

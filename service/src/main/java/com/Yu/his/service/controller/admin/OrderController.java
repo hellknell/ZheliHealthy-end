@@ -26,7 +26,6 @@ import javax.validation.Valid;
 @RequestMapping("/mis/order")
 public class OrderController {
     final OrderService orderService;
-
     @GetMapping("search")
     @SaCheckPermission(value = {"ROOT", "ORDER:SELECT"}, mode = SaMode.OR)
     public R searchByPage(@Valid MisOrderSearchPo po) {
@@ -44,15 +43,12 @@ public class OrderController {
         PageInfo pageInfo = orderService.searchByPage(po);
         return R.ok().put("page", pageInfo);
     }
-
     @DeleteMapping("deleteOrder")
     public R deleteOrderById(@Valid DeleteOrderPo po) {
         Integer orderId = po.getId();
         int rows = orderService.deleteOrderById(orderId);
         return R.ok().put("rows", rows);
-
     }
-
     @PostMapping("/updateRefundStatus")
     @ApiOperation(value = "线下退款")
     public R updateRefundStatus(@Valid @RequestBody DeleteOrderPo po) {

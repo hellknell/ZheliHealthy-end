@@ -1,6 +1,8 @@
 package com.Yu.his.service.controller.user;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.hutool.core.util.IdUtil;
+import com.Yu.his.minio.util.MinioUtil;
 import com.Yu.his.service.config.StpCustomerUtil;
 import com.Yu.his.service.po.CustomerLoginPo;
 import com.Yu.his.service.po.CustomerUpdatePo;
@@ -12,9 +14,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.io.IOException;
 
 /**
  *功能:
@@ -28,6 +34,8 @@ import javax.validation.Valid;
 @RequestMapping("/front/customer")
 public class CustomerController {
     final CustomerService customerService;
+    @Resource
+    private MinioUtil minioUtil;
 
     @GetMapping("/sendSmsCode")
     @ApiOperation(value = "发送验证码")
@@ -79,6 +87,16 @@ public class CustomerController {
         po.setId(loginId);
         int update = customerService.update(po);
         return R.ok().put("rows", update);
+    }
+
+    @PostMapping("/uploadImage")
+    @SaCheckLogin(type = StpCustomerUtil.TYPE)
+    @ApiOperation(value = "更新用户头像")
+    public R updatePhoto(@Param("file") MultipartFile file) throws IOException {
+        String fileName = IdUtil.simpleUUID().toUpperCase() + ".jpg";
+        String path = "front/customer/" + fileName;
+        String s = minioUtil.uploadImage(path, file);
+        return R.ok().put("result", s);
     }
 
 

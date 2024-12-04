@@ -25,7 +25,6 @@ import static com.Yu.his.service.domain.RoleField.Id;
 @RequiredArgsConstructor
 public class DeptService {
     final DeptMapper deptMapper;
-
     public List<DeptListVo> selectAllDept() {
         MyBatisWrapper<Dept> wrapper = new MyBatisWrapper<>();
         wrapper.select(DeptField.DeptName, DeptField.Id).orderByAsc(Id);

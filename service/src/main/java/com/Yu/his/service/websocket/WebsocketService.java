@@ -82,7 +82,7 @@ public class WebsocketService {
             log.info("向用户{}发送了信息", userId);
             Session session = sessionMap.get(userId);
             sendMessage(message, session);
-        }
+}
 
     }
 

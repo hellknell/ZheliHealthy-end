@@ -15,12 +15,9 @@ server:
     context-path: /api
 
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   redis:
     database: 0
-    host: localhost
+    host: redis
     port: 6379
     password: abc123456
     lettuce:
@@ -36,7 +33,7 @@ spring:
   #      exclude: WEB-INF/**
   data:
     mongodb:
-      host: localhost
+      host: mongo
       port: 27017
       username: mongo
       password: abc123456
@@ -46,7 +43,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:7001/his?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+      url: jdbc:mysql://mysql:7001/his?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
       username: root
       password: abc123456
       initial-size: 8

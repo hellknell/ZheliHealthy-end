@@ -7,17 +7,18 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+
 /**
  *功能:
  *作者:何宇
  *日期：2024/11/5 19:44
  */
 @Component
-@Slf4j
-@RequiredArgsConstructor
-public class OrderCleanSchedule {
-    final OrderMapper orderMapper;
-
+    @Slf4j
+    @RequiredArgsConstructor
+    public class OrderCleanSchedule {
+        final OrderMapper orderMapper;
     /**
      * 每小时执行一次
      */
@@ -29,4 +30,6 @@ public class OrderCleanSchedule {
             log.info("共有" + i + "个订单被关闭");
         }
     }
+
+
 }

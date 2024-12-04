@@ -149,7 +149,7 @@ public class GoodsService {
                 String value_6 = row.getCell(5).getStringCellValue();
                 String value_7 = row.getCell(6).getStringCellValue();
                 String value_8 = row.getCell(7).getStringCellValue();
-                LinkedHashMap map = new LinkedHashMap<>() {{
+                LinkedHashMap map = new LinkedHashMap() {{
 
                     put("place", value_1);
                     put("name", value_2);

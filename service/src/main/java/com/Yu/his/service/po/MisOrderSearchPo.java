@@ -21,9 +21,9 @@ public class MisOrderSearchPo extends PagePo implements Serializable {
     private String code;
     private String status;
     private String tel;
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
     private Integer start;
 }
