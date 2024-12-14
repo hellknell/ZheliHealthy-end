@@ -17,7 +17,6 @@ public class R extends HashMap<String, Object> {
         put("code", 200);
     }
 
-
     @Override
     public R put(String key, Object value) {
         super.put(key, value);

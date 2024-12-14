@@ -56,7 +56,6 @@ public class initAsync {
         DateTime startDate = DateUtil.tomorrow();
         DateTime endDate = startDate.offsetNew(DateField.DAY_OF_MONTH, 60);
         DateRange range = DateUtil.range(startDate, endDate, DateField.DAY_OF_MONTH);
-
         MyBatisWrapper<AppointmentRestriction> wrapper = new MyBatisWrapper<>();
         wrapper.select(AppointmentRestrictionField.Date, AppointmentRestrictionField.Num1, AppointmentRestrictionField.Num3).whereBuilder().andBetween(AppointmentRestrictionField.Date, startDate.toJdkDate(), endDate.toJdkDate());
         List<AppointmentRestriction> list = appointmentRestrictionMapper.list(wrapper);

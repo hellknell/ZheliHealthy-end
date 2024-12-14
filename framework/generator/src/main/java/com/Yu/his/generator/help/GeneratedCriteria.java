@@ -31,7 +31,6 @@ public abstract class GeneratedCriteria {
         }
         criteria.add(new Criterion(condition));
     }
-
     protected void addCriterion(String condition, Object value, String property, String jdbcType) {
         if (value == null) {
             throw new RuntimeException("Value for " + property + " cannot be null");

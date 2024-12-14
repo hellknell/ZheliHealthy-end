@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Yu.his.service.mapper.AppointmentMapper">
+    <resultMap id="BaseResultMap" type="com.Yu.his.service.domain.Appointment">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="uuid" jdbcType="CHAR" property="uuid"/>
+        <result column="order_id" jdbcType="INTEGER" property="orderId"/>
+        <result column="date" jdbcType="DATE" property="date"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="CHAR" property="sex"/>
+        <result column="pid" jdbcType="CHAR" property="pid"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="tel" jdbcType="CHAR" property="tel"/>
+        <result column="mailing_address" jdbcType="VARCHAR" property="mailingAddress"/>
+        <result column="company" jdbcType="VARCHAR" property="company"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="checkin_time" jdbcType="TIMESTAMP" property="checkinTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , uuid, order_id, date, name, sex, pid, birthday, tel, mailing_address, company,
+    status, checkin_time, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_appointment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_appointment
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.Yu.his.service.domain.Appointment">
+        <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into tb_appointment (id, uuid, order_id,
+        date, name, sex, pid,
+        birthday, tel, mailing_address,
+        company, status, checkin_time,
+        create_time)
+        values (#{id,jdbcType=INTEGER}, #{uuid,jdbcType=CHAR}, #{orderId,jdbcType=INTEGER},
+        #{date,jdbcType=DATE}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{pid,jdbcType=CHAR},
+        #{birthday,jdbcType=DATE}, #{tel,jdbcType=CHAR}, #{mailingAddress,jdbcType=VARCHAR},
+        #{company,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{checkinTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.Yu.his.service.domain.Appointment">
+        <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into tb_appointment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="mailingAddress != null">
+                mailing_address,
+            </if>
+            <if test="company != null">
+                company,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="checkinTime != null">
+                checkin_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id,jdbcType=INTEGER},
+            <if test="uuid != null">
+                #{uuid,jdbcType=CHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=DATE},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=CHAR},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=CHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=CHAR},
+            </if>
+            <if test="mailingAddress != null">
+                #{mailingAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="checkinTime != null">
+                #{checkinTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.Yu.his.service.domain.Appointment">
+        update tb_appointment
+        <set>
+            <if test="uuid != null">
+                uuid = #{uuid,jdbcType=CHAR},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=DATE},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=CHAR},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=CHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=CHAR},
+            </if>
+            <if test="mailingAddress != null">
+                mailing_address = #{mailingAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                company = #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="checkinTime != null">
+                checkin_time = #{checkinTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.Yu.his.service.domain.Appointment">
+        update tb_appointment
+        set uuid            = #{uuid,jdbcType=CHAR},
+            order_id        = #{orderId,jdbcType=INTEGER},
+            date            = #{date,jdbcType=DATE},
+            name            = #{name,jdbcType=VARCHAR},
+            sex             = #{sex,jdbcType=CHAR},
+            pid             = #{pid,jdbcType=CHAR},
+            birthday        = #{birthday,jdbcType=DATE},
+            tel             = #{tel,jdbcType=CHAR},
+            mailing_address = #{mailingAddress,jdbcType=VARCHAR},
+            company         = #{company,jdbcType=VARCHAR},
+            status          = #{status,jdbcType=TINYINT},
+            checkin_time    = #{checkinTime,jdbcType=TIMESTAMP},
+            create_time     = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="list" parameterType="com.Yu.his.generator.help.MyBatisWrapper" resultMap="BaseResultMap">
+        <include refid="listSql"/>
+    </select>
+    <sql id="listSql">
+        select
+        <if test="selectBuilder == null">
+            *
+        </if>
+        <if test="selectBuilder != null">
+            <trim prefixOverrides="," suffixOverrides=",">
+                ${selectBuilder}
+            </trim>
+        </if>
+        from tb_appointment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="groupBySql != null">
+            group by ${groupBySql}
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="rows != null">
+            <if test="offset != null">
+                limit ${offset}, ${rows}
+            </if>
+            <if test="offset == null">
+                limit ${rows}
+            </if>
+        </if>
+    </sql>
+    <sql id="Example_Where_Clause">
+        <where>
+            <trim prefixOverrides="and | or">
+                <foreach collection="oredCriteria" item="criteria">
+                    <if test="criteria.valid">
+                        <if test="criteria.andOrOr">
+                            and
+                        </if>
+                        <if test="!criteria.andOrOr">
+                            or
+                        </if>
+                        <trim prefix="(" prefixOverrides="and | or" suffix=")">
+                            <foreach collection="criteria.criteria" item="criterion">
+                                <choose>
+                                    <when test="criterion.noValue">
+                                        ${criterion.condition}
+                                    </when>
+                                    <when test="criterion.singleValue">
+                                        ${criterion.condition} #{criterion.value, jdbcType=${criterion.jdbcType}}
+                                    </when>
+                                    <when test="criterion.betweenValue">
+                                        ${criterion.condition} #{criterion.value, jdbcType=${criterion.jdbcType}} and
+                                        #{criterion.secondValue, jdbcType=${criterion.jdbcType}}
+                                    </when>
+                                    <when test="criterion.listValue">
+                                        ${criterion.condition}
+                                        <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                                 separator=",">
+                                            #{listItem, jdbcType=${criterion.jdbcType}}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </if>
+                </foreach>
+            </trim>
+        </where>
+    </sql>
+    <delete id="deleteField" parameterType="com.Yu.his.generator.help.MyBatisWrapper">
+        delete from tb_appointment
+        <include refid="Update_By_Example_Where_Clause"/>
+    </delete>
+    <select id="topOne" parameterType="com.Yu.his.generator.help.MyBatisWrapper" resultMap="BaseResultMap">
+        select
+        <if test="selectBuilder != null">
+            <trim prefixOverrides="," suffixOverrides=",">
+                ${selectBuilder}
+            </trim>
+        </if>
+        from tb_appointment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        limit 1
+    </select>
+
+    <select id="count" parameterType="com.Yu.his.generator.help.MyBatisWrapper" resultType="java.lang.Integer">
+        <include refid="countSql"/>
+    </select>
+    <sql id="countSql">
+        select count(*) total_count from tb_appointment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </sql>
+    <update id="updateField" parameterType="com.Yu.his.generator.help.MyBatisWrapper">
+        update tb_appointment
+        set
+        <trim prefixOverrides="," suffixOverrides=",">
+            ${example.updateSql}
+        </trim>
+        <if test="example.updateSql != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <trim prefixOverrides="and | or">
+                <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                    <if test="criteria.andOrOr">
+                        and
+                    </if>
+                    <if test="!criteria.andOrOr">
+                        or
+                    </if>
+                    <if test="criteria.valid">
+                        <trim prefix="(" prefixOverrides="and" suffix=")">
+                            <foreach collection="criteria.criteria" item="criterion">
+                                <choose>
+                                    <when test="criterion.noValue">
+                                        ${criterion.condition}
+                                    </when>
+                                    <when test="criterion.singleValue">
+                                        ${criterion.condition} #{criterion.value, jdbcType=${criterion.jdbcType}}
+                                    </when>
+                                    <when test="criterion.betweenValue">
+                                        ${criterion.condition} #{criterion.value, jdbcType=${criterion.jdbcType}} and
+                                        #{criterion.secondValue, jdbcType=${criterion.jdbcType}}
+                                    </when>
+                                    <when test="criterion.listValue">
+                                        ${criterion.condition}
+                                        <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                                 separator=",">
+                                            #{listItem, jdbcType=${criterion.jdbcType}}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </if>
+                </foreach>
+            </trim>
+        </where>
+    </sql>
+    <update id="updateFieldBatch" parameterType="java.util.List">
+        <foreach collection="list" index="index" item="example" separator=";">
+            update tb_appointment
+            set
+            <trim prefixOverrides="," suffixOverrides=",">
+                ${example.updateSql}
+            </trim>
+            <if test="example != null">
+                <include refid="Update_By_Example_Where_Clause"/>
+            </if>
+        </foreach>
+    </update>
+    <select id="get" parameterType="com.Yu.his.generator.help.MyBatisWrapper" resultMap="BaseResultMap">
+        select
+        <if test="selectBuilder != null">
+            <trim prefixOverrides="," suffixOverrides=",">
+                ${selectBuilder}
+            </trim>
+        </if>
+        from tb_appointment
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.Collection"
+            useGeneratedKeys="true">
+        insert into tb_appointment (uuid, order_id, date, name, sex, pid, birthday, tel, mailing_address, company,
+        status, checkin_time, create_time) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.uuid, jdbcType=CHAR},
+                #{item.orderId, jdbcType=INTEGER},
+                #{item.date, jdbcType=DATE},
+                #{item.name, jdbcType=VARCHAR},
+                #{item.sex, jdbcType=CHAR},
+                #{item.pid, jdbcType=CHAR},
+                #{item.birthday, jdbcType=DATE},
+                #{item.tel, jdbcType=CHAR},
+                #{item.mailingAddress, jdbcType=VARCHAR},
+                #{item.company, jdbcType=VARCHAR},
+                #{item.status, jdbcType=TINYINT},
+                #{item.checkinTime, jdbcType=TIMESTAMP},
+                #{item.createTime, jdbcType=TIMESTAMP},
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update tb_appointment
+        <set>
+            <trim prefix="id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.id != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.id,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="uuid = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.uuid != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.uuid,jdbcType=CHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="order_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.orderId != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.orderId,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="date = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.date != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.date,jdbcType=DATE}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="name = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.name != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.name,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="sex = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.sex != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.sex,jdbcType=CHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="pid = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.pid != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.pid,jdbcType=CHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="birthday = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.birthday != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.birthday,jdbcType=DATE}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="tel = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.tel != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.tel,jdbcType=CHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="mailing_address = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.mailingAddress != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.mailingAddress,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="company = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.company != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.company,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="status = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.status != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="checkin_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.checkinTime != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.checkinTime,jdbcType=TIMESTAMP}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="create_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.createTime != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+                    </if>
+                </foreach>
+            </trim>
+        </set>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <select id="searchAppointmentByPage" parameterType="com.Yu.his.service.po.FrontAppointmentSearchPo"
+            resultType="HashMap">
+        select
+        a.id,
+        a.date,
+        a.name,
+        a.`status`,
+        o.goods_title as goodsTitle,
+        c.file_path as filePath
+        from tb_appointment a
+        join tb_order o on o.id = a.order_id
+        left join tb_checkup_report c on c.appointment_id = a.id
+        <where>
+            o.customer_id=#{customerId}
+            <if test="status!=null">
+                AND a.`status`=#{status}
+            </if>
+            <if test="date!=null">
+                AND a.`date`=#{date}
+            </if>
+            <if test="keyword!=null">
+                AND ( (o.goods_title like CONCAT("%",#{keyword},"%") ) OR ( a.name = #{keyword} ) OR ( a.tel =
+                #{keyword}) )
+            </if>
+        </where>
+        order by o.id desc
+        limit #{start},#{pageSize}
+    </select>
+    <select id="searchAppointmentCount" parameterType="com.Yu.his.service.po.FrontAppointmentSearchPo"
+            resultType="long">
+        select count(*)
+        from tb_appointment a
+        join tb_order o on o.id = a.order_id
+        <where>
+            o.customer_id=#{customerId}
+            <if test="status!=null">
+                AND a.`status`=#{status}
+            </if>
+            <if test="date!=null">
+                AND a.`date`=#{date}
+            </if>
+            <if test="keyword!=null">
+                AND ( (o.goods_title like CONCAT("%",#{keyword},"%") ) OR ( a.name = #{keyword} ) OR ( a.tel =
+                #{keyword}) )
+            </if>
+        </where>
+    </select>
+
+    <select id="searchByPageForMis" resultType="HashMap">
+        SELECT
+        a.id,
+        o.goods_title as goodsTitle,
+        o.snapshot_id as snapshotId,
+        a.name,
+        a.sex,
+        TimestampDIFF(YEAR,a.birthday,NOW()) as age,
+        CONCAT(SUBSTRING(a.tel,1,3), "****",SUBSTRING(a.tel,8,4)) as tel,
+        CONCAT(SUBSTRING(a.pid,1,3), "******",SUBSTRING(a.tel,15,4)) as pid,
+        a.pid,
+        a.company,
+        a.`status`
+        FROM tb_appointment a
+        inner join tb_order o on o.id = a.order_id
+        <where>
+            <if test="name!=null">
+                AND a.name = ConCAT("%", #{name},"%")
+            </if>
+            <if test="tel!=null">
+                AND a.tel = #{tel}
+            </if>
+            <if test="date!=null">
+                AND a.date = #{date}
+            </if>
+            <if test="status!=null">
+                AND a.`status` = #{status}
+            </if>
+        </where>
+        order by a.id desc
+        LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="searchByPageForMisCount" resultType="long">
+        SELECT Count(*)
+        FROM tb_appointment a
+        <where>
+            <if test="name!=null">
+                AND a.name = ConCAT("%", #{name},"%")
+            </if>
+            <if test="tel!=null">
+                AND a.tel = #{tel}
+            </if>
+            <if test="date!=null">
+                AND a.date = #{date}
+            </if>
+            <if test="status!=null">
+                AND a.`status` = #{status}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById">
+        delete from tb_appointment where id in
+        <foreach collection="array" open="(" close=")" item="one" separator=",">
+            #{one}
+        </foreach>
+        where `status`=1
+    </delete>
+</mapper>

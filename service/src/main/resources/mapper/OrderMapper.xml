@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Yu.his.service.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.Yu.his.service.domain.Order">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="customer_id" jdbcType="INTEGER" property="customerId"/>
+        <result column="goods_id" jdbcType="INTEGER" property="goodsId"/>
+        <result column="snapshot_id" jdbcType="VARCHAR" property="snapshotId"/>
+        <result column="goods_title" jdbcType="VARCHAR" property="goodsTitle"/>
+        <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+        <result column="goods_image" jdbcType="VARCHAR" property="goodsImage"/>
+        <result column="goods_description" jdbcType="VARCHAR" property="goodsDescription"/>
+        <result column="out_trade_no" jdbcType="CHAR" property="outTradeNo"/>
+        <result column="transaction_id" jdbcType="CHAR" property="transactionId"/>
+        <result column="out_refund_no" jdbcType="CHAR" property="outRefundNo"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="create_date" jdbcType="DATE" property="createDate"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="refund_date" jdbcType="DATE" property="refundDate"/>
+        <result column="refund_time" jdbcType="TIMESTAMP" property="refundTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , customer_id, goods_id, snapshot_id, goods_title, goods_price, number, amount,
+    goods_image, goods_description, out_trade_no, transaction_id, out_refund_no, status, 
+    create_date, create_time, refund_date, refund_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_order
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_order
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.Yu.his.service.domain.Order">
+        <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into tb_order (id, customer_id, goods_id,
+        snapshot_id, goods_title, goods_price,
+        number, amount, goods_image,
+        goods_description, out_trade_no, transaction_id,
+        out_refund_no, status, create_date,
+        create_time, refund_date, refund_time
+        )
+        values (#{id,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER},
+        #{snapshotId,jdbcType=VARCHAR}, #{goodsTitle,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL},
+        #{number,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{goodsImage,jdbcType=VARCHAR},
+        #{goodsDescription,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=CHAR}, #{transactionId,jdbcType=CHAR},
+        #{outRefundNo,jdbcType=CHAR}, #{status,jdbcType=TINYINT}, #{createDate,jdbcType=DATE},
+        #{createTime,jdbcType=TIMESTAMP}, #{refundDate,jdbcType=DATE}, #{refundTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.Yu.his.service.domain.Order" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into tb_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="snapshotId != null">
+                snapshot_id,
+            </if>
+            <if test="goodsTitle != null">
+                goods_title,
+            </if>
+            <if test="goodsPrice != null">
+                goods_price,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="goodsImage != null">
+                goods_image,
+            </if>
+            <if test="goodsDescription != null">
+                goods_description,
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no,
+            </if>
+            <if test="transactionId != null">
+                transaction_id,
+            </if>
+            <if test="outRefundNo != null">
+                out_refund_no,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="refundDate != null">
+                refund_date,
+            </if>
+            <if test="refundTime != null">
+                refund_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id,jdbcType=INTEGER},
+            <if test="customerId != null">
+                #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="snapshotId != null">
+                #{snapshotId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsTitle != null">
+                #{goodsTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPrice != null">
+                #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsImage != null">
+                #{goodsImage,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsDescription != null">
+                #{goodsDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeNo != null">
+                #{outTradeNo,jdbcType=CHAR},
+            </if>
+            <if test="transactionId != null">
+                #{transactionId,jdbcType=CHAR},
+            </if>
+            <if test="outRefundNo != null">
+                #{outRefundNo,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundDate != null">
+                #{refundDate,jdbcType=DATE},
+            </if>
+            <if test="refundTime != null">
+                #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.Yu.his.service.domain.Order">
+        update tb_order
+        <set>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="snapshotId != null">
+                snapshot_id = #{snapshotId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsTitle != null">
+                goods_title = #{goodsTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="goodsImage != null">
+                goods_image = #{goodsImage,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsDescription != null">
+                goods_description = #{goodsDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no = #{outTradeNo,jdbcType=CHAR},
+            </if>
+            <if test="transactionId != null">
+                transaction_id = #{transactionId,jdbcType=CHAR},
+            </if>
+            <if test="outRefundNo != null">
+                out_refund_no = #{outRefundNo,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refundDate != null">
+                refund_date = #{refundDate,jdbcType=DATE},
+            </if>
+            <if test="refundTime != null">
+                refund_time = #{refundTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.Yu.his.service.domain.Order">
+        update tb_order
+        set customer_id       = #{customerId,jdbcType=INTEGER},
+            goods_id          = #{goodsId,jdbcType=INTEGER},
+            snapshot_id       = #{snapshotId,jdbcType=VARCHAR},
+            goods_title       = #{goodsTitle,jdbcType=VARCHAR},
+            goods_price       = #{goodsPrice,jdbcType=DECIMAL},
+            number            = #{number,jdbcType=INTEGER},
+            amount            = #{amount,jdbcType=DECIMAL},
+            goods_image       = #{goodsImage,jdbcType=VARCHAR},
+            goods_description = #{goodsDescription,jdbcType=VARCHAR},
+            out_trade_no      = #{outTradeNo,jdbcType=CHAR},
+            transaction_id    = #{transactionId,jdbcType=CHAR},
+            out_refund_no     = #{outRefundNo,jdbcType=CHAR},
+            status            = #{status,jdbcType=TINYINT},
+            create_date       = #{createDate,jdbcType=DATE},
+            create_time       = #{createTime,jdbcType=TIMESTAMP},
+            refund_date       = #{refundDate,jdbcType=DATE},
+            refund_time       = #{refundTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="list" parameterType="com.Yu.his.generator.help.MyBatisWrapper" resultMap="BaseResultMap">
+        <include refid="listSql"/>
+    </select>
+    <sql id="listSql">
+        select
+        <if test="selectBuilder == null">
+            *
+        </if>
+        <if test="selectBuilder != null">
+            <trim prefixOverrides="," suffixOverrides=",">
+                ${selectBuilder}
+            </trim>
+        </if>
+        from tb_order
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="groupBySql != null">
+            group by ${groupBySql}
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="rows != null">
+            <if test="offset != null">
+                limit ${offset}, ${rows}
+            </if>
+            <if test="offset == null">
+                limit ${rows}
+            </if>
+        </if>
+    </sql>
+    <sql id="Example_Where_Clause">
+        <where>
+            <trim prefixOverrides="and | or">
+                <foreach collection="oredCriteria" item="criteria">
+                    <if test="criteria.valid">
+                        <if test="criteria.andOrOr">
+                            and
+                        </if>
+                        <if test="!criteria.andOrOr">
+                            or
+                        </if>
+                        <trim prefix="(" prefixOverrides="and | or" suffix=")">
+                            <foreach collection="criteria.criteria" item="criterion">
+                                <choose>
+                                    <when test="criterion.noValue">
+                                        ${criterion.condition}
+                                    </when>
+                                    <when test="criterion.singleValue">
+                                        ${criterion.condition} #{criterion.value, jdbcType=${criterion.jdbcType}}
+                                    </when>
+                                    <when test="criterion.betweenValue">
+                                        ${criterion.condition} #{criterion.value, jdbcType=${criterion.jdbcType}} and
+                                        #{criterion.secondValue, jdbcType=${criterion.jdbcType}}
+                                    </when>
+                                    <when test="criterion.listValue">
+                                        ${criterion.condition}
+                                        <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                                 separator=",">
+                                            #{listItem, jdbcType=${criterion.jdbcType}}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </if>
+                </foreach>
+            </trim>
+        </where>
+    </sql>
+    <delete id="deleteField" parameterType="com.Yu.his.generator.help.MyBatisWrapper">
+        delete from tb_order
+        <include refid="Update_By_Example_Where_Clause"/>
+    </delete>
+    <select id="topOne" parameterType="com.Yu.his.generator.help.MyBatisWrapper" resultMap="BaseResultMap">
+        select
+        <if test="selectBuilder != null">
+            <trim prefixOverrides="," suffixOverrides=",">
+                ${selectBuilder}
+            </trim>
+        </if>
+        from tb_order
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        limit 1
+    </select>
+
+    <select id="count" parameterType="com.Yu.his.generator.help.MyBatisWrapper" resultType="java.lang.Integer">
+        <include refid="countSql"/>
+    </select>
+    <sql id="countSql">
+        select count(*) total_count from tb_order
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </sql>
+    <update id="updateField" parameterType="com.Yu.his.generator.help.MyBatisWrapper">
+        update tb_order
+        set
+        <trim prefixOverrides="," suffixOverrides=",">
+            ${example.updateSql}
+        </trim>
+        <if test="example.updateSql != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <trim prefixOverrides="and | or">
+                <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                    <if test="criteria.andOrOr">
+                        and
+                    </if>
+                    <if test="!criteria.andOrOr">
+                        or
+                    </if>
+                    <if test="criteria.valid">
+                        <trim prefix="(" prefixOverrides="and" suffix=")">
+                            <foreach collection="criteria.criteria" item="criterion">
+                                <choose>
+                                    <when test="criterion.noValue">
+                                        ${criterion.condition}
+                                    </when>
+                                    <when test="criterion.singleValue">
+                                        ${criterion.condition} #{criterion.value, jdbcType=${criterion.jdbcType}}
+                                    </when>
+                                    <when test="criterion.betweenValue">
+                                        ${criterion.condition} #{criterion.value, jdbcType=${criterion.jdbcType}} and
+                                        #{criterion.secondValue, jdbcType=${criterion.jdbcType}}
+                                    </when>
+                                    <when test="criterion.listValue">
+                                        ${criterion.condition}
+                                        <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                                 separator=",">
+                                            #{listItem, jdbcType=${criterion.jdbcType}}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </if>
+                </foreach>
+            </trim>
+        </where>
+    </sql>
+    <update id="updateFieldBatch" parameterType="java.util.List">
+        <foreach collection="list" index="index" item="example" separator=";">
+            update tb_order
+            set
+            <trim prefixOverrides="," suffixOverrides=",">
+                ${example.updateSql}
+            </trim>
+            <if test="example != null">
+                <include refid="Update_By_Example_Where_Clause"/>
+            </if>
+        </foreach>
+    </update>
+    <select id="get" parameterType="com.Yu.his.generator.help.MyBatisWrapper" resultMap="BaseResultMap">
+        select
+        <if test="selectBuilder != null">
+            <trim prefixOverrides="," suffixOverrides=",">
+                ${selectBuilder}
+            </trim>
+        </if>
+        from tb_order
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <insert id="insertBatch" keyColumn="id" keyProperty="id" parameterType="java.util.Collection"
+            useGeneratedKeys="true">
+        insert into tb_order (customer_id, goods_id, snapshot_id, goods_title, goods_price, number, amount, goods_image,
+        goods_description, out_trade_no, transaction_id, out_refund_no, status, create_date, create_time, refund_date,
+        refund_time) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.customerId, jdbcType=INTEGER},
+                #{item.goodsId, jdbcType=INTEGER},
+                #{item.snapshotId, jdbcType=VARCHAR},
+                #{item.goodsTitle, jdbcType=VARCHAR},
+                #{item.goodsPrice, jdbcType=DECIMAL},
+                #{item.number, jdbcType=INTEGER},
+                #{item.amount, jdbcType=DECIMAL},
+                #{item.goodsImage, jdbcType=VARCHAR},
+                #{item.goodsDescription, jdbcType=VARCHAR},
+                #{item.outTradeNo, jdbcType=CHAR},
+                #{item.transactionId, jdbcType=CHAR},
+                #{item.outRefundNo, jdbcType=CHAR},
+                #{item.status, jdbcType=TINYINT},
+                #{item.createDate, jdbcType=DATE},
+                #{item.createTime, jdbcType=TIMESTAMP},
+                #{item.refundDate, jdbcType=DATE},
+                #{item.refundTime, jdbcType=TIMESTAMP},
+            </trim>
+        </foreach>
+    </insert>
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        update tb_order
+        <set>
+            <trim prefix="id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.id != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.id,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="customer_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.customerId != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.customerId,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="goods_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.goodsId != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.goodsId,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="snapshot_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.snapshotId != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.snapshotId,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="goods_title = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.goodsTitle != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.goodsTitle,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="goods_price = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.goodsPrice != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.goodsPrice,jdbcType=DECIMAL}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="number = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.number != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.number,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="amount = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.amount != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.amount,jdbcType=DECIMAL}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="goods_image = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.goodsImage != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.goodsImage,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="goods_description = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.goodsDescription != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.goodsDescription,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="out_trade_no = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.outTradeNo != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.outTradeNo,jdbcType=CHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="transaction_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.transactionId != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.transactionId,jdbcType=CHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="out_refund_no = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.outRefundNo != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.outRefundNo,jdbcType=CHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="status = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.status != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="create_date = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.createDate != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.createDate,jdbcType=DATE}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="create_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.createTime != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="refund_date = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.refundDate != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.refundDate,jdbcType=DATE}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="refund_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.refundTime != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.refundTime,jdbcType=TIMESTAMP}
+                    </if>
+                </foreach>
+            </trim>
+        </set>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <select id="searchOrderStatistic" resultType="com.Yu.his.service.vo.OrderStatisticVo" parameterType="int">
+        select count(*) as count,
+            SUM(amount) as amount,
+        SUM(number) as number
+        from tb_order
+        where customer_id = #{id}
+          and `status` IN (3
+            , 5
+            , 6)
+    </select>
+
+    <select id="selectIllegalOrder" resultType="boolean" parameterType="int">
+        SELECT (
+                           (SELECT COUNT(*)
+                            from tb_order
+                            where customer_id = #{id}
+                              AND create_date = CURRENT_DATE()
+                              AND `status` &lt; 3) >= 10
+                       OR
+                           (SELECT COUNT(*)
+                            from tb_order
+                            where customer_id = #{id}
+                              AND refund_date = CURRENT_DATE()
+                              AND `status` = 4) >= 5
+                   ) as illegal
+    </select>
+    <select id="searchGoodsSnapshotById" parameterType="int" resultType="HashMap">
+        SELECT g.`code`,
+               g.title,
+               g.description,
+               g.image,
+               g.checkup_1,
+               g.checkup_2,
+               g.checkup_3,
+               g.checkup_4,
+               g.checkup,
+               g.tag,
+               CAST(g.initial_price as CHAR) as initialPrice,
+               CAST(g.current_price as CHAR) as currentPrice,
+               g.`type`,
+               r.name                        as "ruleName",
+               r.rule,
+               g.`md5`
+        from tb_goods g
+                 left join tb_rule r
+                           on g.rule_id = r.id
+        where g.id = #{id}
+    </select>
+    <update id="closeTimeoutOrder">
+        UPDATE tb_order
+        SET `status`=2
+        where `status` = 1
+          AND TIMESTAmpDIFF(MINUTE,create_time, NOW()) > 30
+    </update>
+
+    <update id="updatePayment">
+        UPDATE tb_order
+        SET `status`=3,
+            transaction_id=#{transactionId}
+        where out_trade_no = #{outTradeNo}
+          AND `status` = 1
+    </update>
+    <select id="selectFrontOrderByPage" parameterType="com.Yu.his.service.po.FrontOrderSearchPo" resultType="HashMap">
+        SELECT o.id,
+        o.goods_id,
+        o.snapshot_id as "snapshotId",
+        o.goods_title as "goodsTitle",
+        o.goods_price as "goodsPrice",
+        o.number,
+        o.`status`,
+        if(o.`status`=1 AND TIMESTAMPDIFF(MINUTE,o.create_time,NOW())>20,true,false) as disabled,
+        o.amount,
+        goods_image as "goodsImage",
+        goods_description as "goodsDescription",
+        out_trade_no as "outTradeNo",
+        Date_FORMAT(o.create_date,"%Y-%m-%d") as createDate,
+        Date_FORMAT(o.create_time,"%Y-%m-%d %H:%i:%s") as createTime,
+        count(a.id) as appointCount
+        FROM tb_order o
+        left join tb_appointment a on
+        o.id=a.order_id
+        <where>
+            o.customer_id= #{customerId}
+            <if test="status!=null">
+                AND o.`status`=#{status}
+            </if>
+            <if test="keyword!=null">
+                AND ( out_trade_no =#{keyword} OR goods_title LIKE CONCAT('%',#{keyword},'%'))
+            </if>
+        </where>
+        group by o.id
+        ORDER BY o.id desc
+        limit #{start},#{pageSize}
+    </select>
+    <select id="selectFrontOrderCount" parameterType="com.Yu.his.service.po.FrontOrderSearchPo" resultType="long">
+        SELECT COUNT(*)
+        FROM tb_order o
+        <where>
+            o.customer_id= #{customerId}
+            <if test="status!=null">
+                AND o.`status`=#{status}
+            </if>
+            <if test="keyword!=null">
+                AND ( out_trade_no LIKE CONCAT('%',#{keyword},'%') OR goods_title LIKE CONCAT('%',#{keyword},'%'))
+            </if>
+        </where>
+    </select>
+
+
+    <select id="searchByPage" resultType="HashMap" parameterType="com.Yu.his.service.po.MisOrderSearchPo">
+        Select o.id,
+        o.goods_title as goodsTitle,
+        FORMAT(o.goods_price, 0) as goodsPrice,
+        o.snapshot_id as snapshotId,
+        o.number,
+        FORMAT(o.amount, 0) as amount,
+        c.photo,
+        c.name,
+        c.sex,
+        c.tel,
+        Date_FORMAT(c.create_time, "%Y-%m-%d") as registerTime,
+        o.`status`,
+        o.out_trade_no as outTradeNo,
+        o.transaction_id as transactionId,
+        o.out_refund_no as outRefundNo,
+        o.create_date as createDate,
+        Date_FORMAT(o.create_time, "%Y-%m-%d %H:%i") as createTime,
+        o.refund_date as refundDate,
+        Date_FORMAT(o.refund_time, "%Y-%m-%d %H:%i") as refundTime,
+        count(a.id) as num
+        from tb_order o
+        inner join tb_customer c on c.id = o.customer_id
+        inner join tb_goods g on o.goods_id = g.id
+        left join tb_appointment a on a.order_id = o.id
+        <where>
+            <if test="code!=null">
+                AND o.`code`=#{code}
+            </if>
+            <if test="tel!=null">
+                AND o.`tel`=#{tel}
+            </if>
+            <if test="status!=null">
+                AND o.`status`=#{status}
+            </if>
+            <if test="keyword!=null">
+                AND o.goods_title LIKe CONCAT("%",#{keyword},"%")
+            </if>
+            <if test="startDate!=null and endDate!=null">
+                AND o.create_date BETWEEN #{startDate} And #{endDate}
+            </if>
+        </where>
+        GROUP BY o.id
+        ORDER by o.id DESC
+        limit #{start},#{pageSize}
+    </select>
+
+    <select id="searchCount" resultType="long" parameterType="com.Yu.his.service.po.MisOrderSearchPo">
+        SELECT COUNT(*)
+        from tb_order o
+        inner join tb_customer c on c.id = o.customer_id
+        inner join tb_goods g on o.goods_id = g.id
+        <where>
+            <if test="code!=null">
+                AND o.`code`=#{code}
+            </if>
+            <if test="tel!=null">
+                AND o.`tel`=#{tel}
+            </if>
+            <if test="status!=null">
+                AND o.`status`=#{status}
+            </if>
+            <if test="keyword!=null">
+                AND o.goods_title LIKe CONCAT("%",#{keyword},"%")
+            </if>
+            <if test="startDate!=null and endDate!=null">
+                AND o.create_date BETWEEN #{startDate} And #{endDate}
+            </if>
+        </where>
+    </select>
+</mapper>

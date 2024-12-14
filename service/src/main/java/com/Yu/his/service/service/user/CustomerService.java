@@ -41,11 +41,9 @@ public class CustomerService {
         }
         redisTemplate.opsForValue().set(key, code);
         redisTemplate.expire(key, 2, TimeUnit.MINUTES);
-
         key = "sms_code_" + tel;
         redisTemplate.opsForValue().set(key, code);
         redisTemplate.expire(key, 5, TimeUnit.MINUTES);
-
         return true;
     }
 
